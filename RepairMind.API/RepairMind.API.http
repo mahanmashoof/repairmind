@@ -1,0 +1,6 @@
+@RepaiMind.API_HostAddress = http://localhost:5007
+
+GET {{RepaiMind.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
