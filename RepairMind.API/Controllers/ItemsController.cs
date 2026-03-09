@@ -1,20 +1,30 @@
-using Microsoft.AspNetCore.Mvc;
-using RepairMind.API.Models;
 namespace RepairMind.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
 public class ItemsController : ControllerBase
 {
-    private static readonly List<Item> _items = new();
+    private readonly IItemService _itemService;
+
+    public ItemsController(IItemService itemService)
+    {
+        _itemService = itemService;
+    }
 
     [HttpGet]
-    public IActionResult GetAll() => Ok(_items);
+    public IActionResult GetAll() => Ok(_itemService.GetAll());
+
+    [HttpGet("{id}")]
+    public IActionResult GetById(Guid id)
+    {
+        var item = _itemService.GetById(id);
+        return item is null ? NotFound() : Ok(item);
+    }
 
     [HttpPost]
     public IActionResult Create(Item item)
     {
-        _items.Add(item);
-        return CreatedAtAction(nameof(GetAll), new { id = item.Id }, item);
+        var created = _itemService.Create(item);
+        return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
     }
 }

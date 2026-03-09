@@ -1,6 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
-using RepairMind.API.Models;
-
 namespace RepairMind.API.Controllers;
 
 [ApiController]
