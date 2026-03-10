@@ -1,3 +1,5 @@
+using RepairMind.API.Models;
+
 namespace RepairMind.API.Services;
 
 public interface IItemService
