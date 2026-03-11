@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using RepairMind.API.Data;
 using RepairMind.API.Services;
+using RepairMind.API.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddScoped<IItemService, ItemService>();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite("Data Source=repairmind.db"));
+builder.Services.AddScoped<IItemRepository, ItemRepository>();
 
 var app = builder.Build();
 

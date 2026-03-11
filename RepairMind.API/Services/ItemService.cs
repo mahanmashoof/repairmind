@@ -1,25 +1,20 @@
-using Microsoft.EntityFrameworkCore;
-using RepairMind.API.Data;
 using RepairMind.API.Models;
+using RepairMind.API.Repositories;
 
 namespace RepairMind.API.Services;
 
 public class ItemService : IItemService
 {
-    private readonly AppDbContext _db;
+    private readonly IItemRepository _itemRepository;
 
-    public ItemService(AppDbContext db)
+    public ItemService(IItemRepository itemRepository)
     {
-        _db = db;
+        _itemRepository = itemRepository;
     }
 
-    public List<Item> GetAll() => _db.Items.ToList();
+    public List<Item> GetAll() => _itemRepository.GetAll();
 
-    public Item? GetById(Guid id) => _db.Items.FirstOrDefault(i => i.Id == id);
-    public Item Create(Item item)
-    {
-        _db.Items.Add(item);
-        _db.SaveChanges();
-        return item;
-    }
+    public Item? GetById(Guid id) => _itemRepository.GetById(id);
+
+    public Item Create(Item item) => _itemRepository.Add(item);
 }
