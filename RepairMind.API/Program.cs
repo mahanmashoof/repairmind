@@ -6,6 +6,7 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using RepairMind.API.Validators;
 using RepairMind.API.Models;
+using RepairMind.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,7 @@ builder.Services.AddScoped<IItemRepository, ItemRepository>();
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddScoped<IValidator<Item>, ItemValidator>();
 builder.Services.AddScoped<IValidator<RepairRequest>, RepairRequestValidator>();
+builder.Services.AddScoped<IRepairSuggestionService, RepairSuggestionService>();
 
 var app = builder.Build();
 
