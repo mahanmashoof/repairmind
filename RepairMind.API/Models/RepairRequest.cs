@@ -7,6 +7,7 @@ public class RepairRequest
     public string ProblemDescription { get; set; } = string.Empty;
     public RepairStatus Status { get; set; } = RepairStatus.Pending;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public string? AiSuggestion { get; set; }
 }
 
 public enum RepairStatus

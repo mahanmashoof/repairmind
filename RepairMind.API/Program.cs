@@ -23,6 +23,9 @@ builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddScoped<IValidator<Item>, ItemValidator>();
 builder.Services.AddScoped<IValidator<RepairRequest>, RepairRequestValidator>();
 builder.Services.AddScoped<IRepairSuggestionService, RepairSuggestionService>();
+builder.Services.AddSingleton<RepairSuggestionQueue>();
+builder.Services.AddHostedService<RepairSuggestionWorker>();
+builder.Services.AddScoped<IRepairRequestRepository, RepairRequestRepository>();
 
 var app = builder.Build();
 
