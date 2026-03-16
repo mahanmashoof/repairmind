@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using RepairMind.API.Models;
 using RepairMind.API.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RepairMind.API.Controllers;
 
@@ -15,6 +16,7 @@ public class ItemsController : ControllerBase
         _itemService = itemService;
     }
 
+    [Authorize]
     [HttpGet]
     public IActionResult GetAll() => Ok(_itemService.GetAll());
 

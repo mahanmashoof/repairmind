@@ -7,6 +7,10 @@ using FluentValidation.AspNetCore;
 using RepairMind.API.Validators;
 using RepairMind.API.Models;
 using RepairMind.API.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +30,28 @@ builder.Services.AddScoped<IRepairSuggestionService, RepairSuggestionService>();
 builder.Services.AddSingleton<RepairSuggestionQueue>();
 builder.Services.AddHostedService<RepairSuggestionWorker>();
 builder.Services.AddScoped<IRepairRequestRepository, RepairRequestRepository>();
+builder.Services.AddIdentityCore<IdentityUser>()
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<AppDbContext>()
+    .AddDefaultTokenProviders();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
+        };
+    });
+
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 var app = builder.Build();
 
@@ -36,8 +62,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-app.UseAuthorization();
 
 app.UseExceptionHandler(errorApp =>
 {
@@ -51,6 +75,8 @@ app.UseExceptionHandler(errorApp =>
         });
     });
 });
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 
