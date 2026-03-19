@@ -1,4 +1,4 @@
-namespace RepairMind.API.Services;
+namespace RepairMind.Core.Services;
 
 public interface IRepairSuggestionService
 {

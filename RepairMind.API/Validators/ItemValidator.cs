@@ -1,5 +1,5 @@
 using FluentValidation;
-using RepairMind.API.Models;
+using RepairMind.Core.Models;
 
 namespace RepairMind.API.Validators;
 

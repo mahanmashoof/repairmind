@@ -3,7 +3,8 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
-using RepairMind.API.Models;
+using RepairMind.Core.Models;
+using RepairMind.Core.Services;
 
 namespace RepairMind.API.Services;
 

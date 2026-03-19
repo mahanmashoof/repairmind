@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using RepairMind.API.Models;
+using RepairMind.Core.Models;
 
-namespace RepairMind.API.Data;
+namespace RepairMind.Infrastructure.Data;
 
 public class AppDbContext : IdentityDbContext<IdentityUser>
 {

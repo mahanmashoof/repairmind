@@ -2,17 +2,20 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using RepairMind.API.Data;
+using RepairMind.Infrastructure.Data;
 
 #nullable disable
 
-namespace RepairMind.API.Migrations
+namespace RepairMind.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260319203953_InitialMigration")]
+    partial class InitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.5");
@@ -209,7 +212,7 @@ namespace RepairMind.API.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("RepairMind.API.Models.Item", b =>
+            modelBuilder.Entity("RepairMind.Core.Models.Item", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -231,7 +234,7 @@ namespace RepairMind.API.Migrations
                     b.ToTable("Items");
                 });
 
-            modelBuilder.Entity("RepairMind.API.Models.RepairRequest", b =>
+            modelBuilder.Entity("RepairMind.Core.Models.RepairRequest", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()

@@ -1,6 +1,6 @@
-using RepairMind.API.Models;
+using RepairMind.Core.Models;
 
-namespace RepairMind.API.Services;
+namespace RepairMind.Core.Services;
 
 public interface IItemService
 {

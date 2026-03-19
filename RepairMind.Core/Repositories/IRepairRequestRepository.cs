@@ -1,6 +1,6 @@
-using RepairMind.API.Models;
+using RepairMind.Core.Models;
 
-namespace RepairMind.API.Repositories;
+namespace RepairMind.Core.Repositories;
 
 public interface IRepairRequestRepository
 {

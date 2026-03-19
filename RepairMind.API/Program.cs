@@ -1,16 +1,17 @@
 using Microsoft.EntityFrameworkCore;
-using RepairMind.API.Data;
-using RepairMind.API.Services;
-using RepairMind.API.Repositories;
+using RepairMind.Infrastructure.Data;
+using RepairMind.Core.Services;
+using RepairMind.Core.Repositories;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using RepairMind.API.Validators;
-using RepairMind.API.Models;
-using RepairMind.API.Services;
+using RepairMind.Core.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using RepairMind.API.Services;
+using RepairMind.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 

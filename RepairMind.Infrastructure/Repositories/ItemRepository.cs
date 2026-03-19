@@ -1,7 +1,8 @@
-using RepairMind.API.Data;
-using RepairMind.API.Models;
+using RepairMind.Infrastructure.Data;
+using RepairMind.Core.Models;
+using RepairMind.Core.Repositories;
 
-namespace RepairMind.API.Repositories;
+namespace RepairMind.Infrastructure.Repositories;
 
 public class ItemRepository : IItemRepository
 {

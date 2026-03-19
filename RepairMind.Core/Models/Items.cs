@@ -1,4 +1,4 @@
-namespace RepairMind.API.Models;
+namespace RepairMind.Core.Models;
 
 public class Item
 {

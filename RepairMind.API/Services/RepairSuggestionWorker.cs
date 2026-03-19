@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using RepairMind.API.Data;
+using RepairMind.Infrastructure.Data;
+using RepairMind.Core.Services;
 
 namespace RepairMind.API.Services;
 

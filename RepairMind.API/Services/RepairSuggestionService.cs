@@ -1,4 +1,5 @@
 using OpenAI.Chat;
+using RepairMind.Core.Services;
 
 namespace RepairMind.API.Services;
 
