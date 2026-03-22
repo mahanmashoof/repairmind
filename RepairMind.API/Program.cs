@@ -12,6 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using RepairMind.API.Services;
 using RepairMind.Infrastructure.Repositories;
+using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,8 +52,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
         };
     });
-
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddMediatR(cfg =>
+    cfg.RegisterServicesFromAssembly(
+        typeof(RepairMind.Core.Features.Items.Queries.GetAllItemsQuery).Assembly));
 
 var app = builder.Build();
 

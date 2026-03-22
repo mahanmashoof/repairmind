@@ -1,7 +1,8 @@
-using Microsoft.AspNetCore.Mvc;
-using RepairMind.Core.Models;
-using RepairMind.Core.Services;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using RepairMind.Core.Features.Items.Commands;
+using RepairMind.Core.Features.Items.Queries;
 
 namespace RepairMind.API.Controllers;
 
@@ -9,28 +10,22 @@ namespace RepairMind.API.Controllers;
 [Route("[controller]")]
 public class ItemsController : ControllerBase
 {
-    private readonly IItemService _itemService;
+    private readonly IMediator _mediator;
 
-    public ItemsController(IItemService itemService)
+    public ItemsController(IMediator mediator)
     {
-        _itemService = itemService;
+        _mediator = mediator;
     }
 
     [Authorize]
     [HttpGet]
-    public IActionResult GetAll() => Ok(_itemService.GetAll());
-
-    [HttpGet("{id}")]
-    public IActionResult GetById(Guid id)
-    {
-        var item = _itemService.GetById(id);
-        return item is null ? NotFound() : Ok(item);
-    }
+    public async Task<IActionResult> GetAll()
+        => Ok(await _mediator.Send(new GetAllItemsQuery()));
 
     [HttpPost]
-    public IActionResult Create(Item item)
+    public async Task<IActionResult> Create(CreateItemCommand command)
     {
-        var created = _itemService.Create(item);
-        return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
+        var item = await _mediator.Send(command);
+        return CreatedAtAction(nameof(GetAll), new { id = item.Id }, item);
     }
 }
