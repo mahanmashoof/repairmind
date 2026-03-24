@@ -2,4 +2,5 @@
   <Project Path="RepairMind.API/RepairMind.API.csproj" />
   <Project Path="RepairMind.Core/RepairMind.Core.csproj" />
   <Project Path="RepairMind.Infrastructure/RepairMind.Infrastructure.csproj" />
+  <Project Path="RepairMind.Tests/RepairMind.Tests.csproj" />
 </Solution>
