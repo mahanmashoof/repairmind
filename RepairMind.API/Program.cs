@@ -13,8 +13,17 @@ using System.Text;
 using RepairMind.API.Services;
 using RepairMind.Infrastructure.Repositories;
 using MediatR;
+using Serilog;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.VisualBasic;
+
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .WriteTo.File("logs/repairmind.txt", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Host.UseSerilog();
 
 // Add services to the container.
 
@@ -56,6 +65,8 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(
         typeof(RepairMind.Core.Features.Items.Queries.GetAllItemsQuery).Assembly));
+builder.Services.AddHealthChecks()
+.AddDbContextCheck<AppDbContext>();
 
 var app = builder.Build();
 
@@ -81,6 +92,8 @@ app.UseExceptionHandler(errorApp =>
 });
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapHealthChecks("/health");
 
 app.MapControllers();
 
