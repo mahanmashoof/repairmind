@@ -67,14 +67,25 @@ builder.Services.AddMediatR(cfg =>
         typeof(RepairMind.Core.Features.Items.Queries.GetAllItemsQuery).Assembly));
 builder.Services.AddHealthChecks()
 .AddDbContextCheck<AppDbContext>();
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+using (var scope = app.Services.CreateScope())
 {
-    app.MapOpenApi();
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate();
 }
+
+// Configure the HTTP request pipeline.
+// if (app.Environment.IsDevelopment())
+// {
+//     app.MapOpenApi();
+// }
+app.MapOpenApi();
+app.UseSwaggerUI(options =>
+    options.SwaggerEndpoint("/openapi/v1.json", "RepairMind v1"));
 
 app.UseHttpsRedirection();
 

@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  api:
+    build: .
+    ports:
+      - "9090:8080"
+    environment:
+      - ASPNETCORE_URLS=http://+:8080
+      - Jwt__Key=super-secret-key-replace-in-production-min-32-chars!!
+      - Jwt__Issuer=RepairMind
+      - Jwt__Audience=RepairMindUsers
+      - OpenAI__ApiKey=your-api-key-here
+      - ${PWD}/RepairMind.API:/app/data
+    volumes:
+      - ./data:/app/data
